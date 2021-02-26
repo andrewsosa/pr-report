@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
+    "python.sortImports.path": "${workspaceFolder}/.venv/bin/isort",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
+}
