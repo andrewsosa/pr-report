@@ -79,5 +79,5 @@ def pr_report(client: Github, author: str, since: datetime, disable_cache: bool)
 
     print_report(in_progress, closed)
 
-    with open("pull_requests.json", "w") as fp:
-        json.dump([asdict(pr) for pr in all_prs], fp, indent=4, default=str)
+    # with open("pull_requests.json", "w") as fp:
+    #     json.dump([asdict(pr) for pr in all_prs], fp, indent=4, default=str)
