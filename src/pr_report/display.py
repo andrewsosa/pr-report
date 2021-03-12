@@ -17,18 +17,25 @@ Closed 2021/02/24
 
 import huepy as hp
 
+from pr_report.types import PullRequest
+
 
 def print_bold_line(msg):
     print("{}".format(hp.bold(hp.white(msg))))
 
 
-def print_pr_line(number, title, state):
-    if state == "merged":
-        print("    {tag} {title}".format(tag=hp.purple(f"#{number}"), title=title))
-    elif state == "open":
-        print("    {tag} {title}".format(tag=hp.green(f"#{number}"), title=title))
-    else:
-        print("    {tag} {title}".format(tag=hp.red(f"#{number}"), title=title))
+def print_pr_line(pr: PullRequest):
+
+    status_colors = {
+        "merged": hp.purple,
+        "closed": hp.red,
+        "open": hp.green,
+    }
+
+    tag = status_colors.get(pr.state, hp.red)(f"#{pr.number}")
+    url = hp.black(pr.url)
+
+    print("    {tag} {title} {url}".format(tag=tag, title=pr.title, url=url))
 
 
 def print_report(in_progress, closed):
@@ -38,7 +45,7 @@ def print_report(in_progress, closed):
     for repo, prs in in_progress.items():
         print(f"  {repo}")
         for pr in prs:
-            print(f"    #{pr.number} {pr.title}")
+            print_pr_line(pr)
 
     if not in_progress:
         print("  {}".format(hp.italic("No open pull requests.")))
@@ -49,6 +56,6 @@ def print_report(in_progress, closed):
         for repo, prs in repos.items():
             print(f"  {repo}")
             for pr in prs:
-                print_pr_line(pr.number, pr.title, pr.state)
+                print_pr_line(pr)
 
     print("")
